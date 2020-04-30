@@ -29,15 +29,14 @@ public class BlogController {
     }
 
     @GetMapping("/blog/add")
-    public String blogAdd(Model model) {
+    public String blogAdd() {
         return "blog-add";
     }
 
     @PostMapping("/blog/add")
     public String blogPostAdd(@RequestParam String title,
                               @RequestParam String anons,
-                              @RequestParam String full_text,
-                              Model model) {
+                              @RequestParam String full_text) {
         Post post = new Post(title, anons, full_text);
         postRepository.save(post);
         return "redirect:/blog";
@@ -71,8 +70,7 @@ public class BlogController {
     public String blogPostUpdate(@PathVariable(value = "id") long id,
                                  @RequestParam String title,
                                  @RequestParam String anons,
-                                 @RequestParam String full_text,
-                                 Model model) {
+                                 @RequestParam String full_text) {
         Post post = postRepository.findById(id).orElseThrow();
         post.setTitle(title);
         post.setAnons(anons);
@@ -83,7 +81,7 @@ public class BlogController {
     }
 
     @PostMapping("/blog/{id}/remove")
-    public String blogPostDelete(@PathVariable(value = "id") long id, Model model) {
+    public String blogPostDelete(@PathVariable(value = "id") long id) {
         Post post = postRepository.findById(id).orElseThrow();
         postRepository.delete(post);
 
